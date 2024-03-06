@@ -1,0 +1,7 @@
+.container button[type="submit"]:hover {
+    background-color: #29752d;
+}
+
+.reservation tr:hover {
+    background-color: #b2e0b4;
+}
