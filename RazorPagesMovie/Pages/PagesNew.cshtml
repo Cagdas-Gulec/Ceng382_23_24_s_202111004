@@ -4,11 +4,28 @@
      ViewData["Title"] = "Home page";
 }
 
+
 <div class="py-5 text-center">
-    <h2>Checkout form</h2>
+    <button onclick="toggleElements();" class="btn btn-primary">Click me</button> <br>
+    <h2 id = "toggleElement">Checkout form</h2>
     <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has
-        a validation state that can be triggered by attempting to submit the form without completing it.</p>
+        a validation state that can be triggered by attempting to submit the form without completing it.</p><br>
+
+    <form>
+        <div class="mb-3">
+            <label for="input1" class="form-label">Enter first number:</label>
+            <input type="number" class="form-control" id="input1" />
+        </div>
+        <div class="mb-3">
+            <label for="input2" class="form-label">Enter second number:</label>
+            <input type="number" class="form-control" id="input2" />
+        </div>
+        <button onclick="calculate();" class="btn btn-primary">Calculate</button>
+    </form>
+    <div id="result"></div>
+   
 </div>
+
 
 <div class="row g-5">
     <div class="col-md-5 col-lg-4 order-md-last">
@@ -216,3 +233,26 @@
         </form>
     </div>
 </div>
+
+<script>
+
+    function toggleElements() {
+        var element = document.getElementById("toggleElement");
+        if (element.style.display === "none") {
+            element.style.display = "";
+        } else {
+            element.style.display = "none";
+        }
+    }
+
+    function calculate() {
+        event.preventDefault();
+        var input1 = document.getElementById("input1").value;
+        var input2 = document.getElementById("input2").value;
+        var result = parseInt(input1) + parseInt(input2);
+        document.getElementById("result").innerHTML = "Result: " + result;
+    }
+
+
+</script>
+
