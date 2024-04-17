@@ -94,7 +94,6 @@ public class ReservationHandler
     {
         for (int i = 0; i < 7; i++)
         {
-            Console.WriteLine($"Day {i + 1}");
             for (int j = 0; j < reservations[i].Length; j++)
             {
                 if (reservations[i][j] != null)
@@ -148,13 +147,16 @@ class Program
         Reservation r1 = new Reservation(new DateTime(2024, 10, 21, 17, 25, 32), new DateTime(2024, 10, 21), "Cagdas Gulec", roomData.Rooms[0]);
         Reservation r2 = new Reservation(new DateTime(2019, 08, 12, 23, 47, 55), new DateTime(2019, 08, 12), "Arda Yildiz", roomData.Rooms[1]);
         Reservation r3 = new Reservation(new DateTime(2022, 03, 5, 12, 33, 02), new DateTime(2022, 03, 5), "Dogukan Poyraz", roomData.Rooms[2]);
+        Reservation r4 = new Reservation(new DateTime(2018, 05, 7, 15, 13, 59), new DateTime(2018, 05, 7), "Dogukan Poyraz", roomData.Rooms[3]);
 
         ReservationHandler rh = new ReservationHandler();
 
         rh.AddReservation(r1);
         rh.AddReservation(r2);
         rh.AddReservation(r3);
+        rh.AddReservation(r4);
         rh.DeleteReservation(r2);
+
 
         rh.DisplayWeeklySchedule();
 
