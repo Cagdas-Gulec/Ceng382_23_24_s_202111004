@@ -18,6 +18,6 @@ public record Room
 
     public override string ToString()
     {
-        return $"{RoomName} (Capacity: {Capacity})";
+        return $"RoomId: {RoomId}, RoomName: {RoomName}, Capacity: {Capacity}";
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -8,7 +10,10 @@ class Program
     static void Main()
     {
         string jsonString = "";
-        var roomData = new RoomData();
+        var roomData = new ReservationRepository();
+
+        File.WriteAllText("LogData.json", string.Empty);
+
 
         try
         {
@@ -31,7 +36,7 @@ class Program
 
         try
         {
-            roomData = JsonSerializer.Deserialize<RoomData>(jsonString, options);
+            roomData = JsonSerializer.Deserialize<ReservationRepository>(jsonString, options);
         }
         catch (JsonException)
         {
@@ -41,8 +46,8 @@ class Program
         {
             Console.WriteLine("An error occurred");
         }
-        
-         if (roomData?.Rooms != null)
+
+        /* if (roomData?.Rooms != null)
         {
             foreach (var room in roomData.Rooms)
             {
@@ -51,25 +56,67 @@ class Program
                 Console.WriteLine($"Room Capacity: {room.Capacity}");
                 Console.WriteLine();
             }
-        }
+        } */
 
-        if (roomData?.Rooms != null)
+        if (roomData?.GetRooms() != null)
         {
-            Reservation r1 = new Reservation(new DateTime(2024, 10, 21, 17, 25, 32), new DateTime(2024, 10, 21), "Cagdas Gulec", roomData.Rooms[0]);
-            Reservation r2 = new Reservation(new DateTime(2019, 08, 12, 23, 47, 55), new DateTime(2019, 08, 12), "Arda Yildiz", roomData.Rooms[1]);
-            Reservation r3 = new Reservation(new DateTime(2022, 03, 5, 12, 33, 02), new DateTime(2022, 03, 5), "Dogukan Poyraz", roomData.Rooms[2]);
-            Reservation r4 = new Reservation(new DateTime(2018, 05, 7, 15, 13, 59), new DateTime(2018, 05, 7), "Samet Gungor", roomData.Rooms[8]);
+            Reservation r1 = new Reservation(new DateTime(2024, 10, 21, 17, 25, 32), "Cagdas Gulec", roomData.Rooms[0]);
+            Reservation r2 = new Reservation(new DateTime(2019, 08, 12, 23, 47, 55), "Arda Yildiz", roomData.Rooms[1]);
+            Reservation r3 = new Reservation(new DateTime(2022, 03, 5, 12, 33, 02), "Dogukan Poyraz", roomData.Rooms[2]);
+            Reservation r4 = new Reservation(new DateTime(2018, 05, 7, 15, 13, 59), "Samet Gungor", roomData.Rooms[8]);
 
-            ReservationHandler rh = new ReservationHandler();
+            ReservationHandler reservationHandler = new ReservationHandler(new ReservationRepository());
+            reservationHandler.BookRoom(r1);
+            reservationHandler.BookRoom(r2);
+            reservationHandler.BookRoom(r3);
+            reservationHandler.BookRoom(r4);
 
-            rh.bookRoom(r1);
-            rh.bookRoom(r2);
-            rh.bookRoom(r3);
-            rh.bookRoom(r4);
-            rh.removeBooking("Dogukan Poyraz");
+           /*  foreach (var reservation in reservationHandler.GetAllReservations())
+            {
+                Console.WriteLine($"Reservation Date: {reservation.Time}");
+                Console.WriteLine($"Reserver Name: {reservation.ReserverName}");
+                Console.WriteLine($"Room ID: {reservation.Room.RoomId}");
+                Console.WriteLine($"Room Name: {reservation.Room.RoomName}");
+                Console.WriteLine($"Room Capacity: {reservation.Room.Capacity}");
+                Console.WriteLine();
+            } */
+
+            string fileContent = File.ReadAllText("ReservationData.json");
+            Console.WriteLine("Content of ReservationData.json:");
+            Console.WriteLine(fileContent);
+            
+            string fileContent2 = File.ReadAllText("LogData.json");
+            Console.WriteLine("Content of LogData.json:");
+            Console.WriteLine(fileContent2);
+
+            ReservationService _reservationService = new ReservationService();
+
+            string reserverName = "Cagdas Gulec"; // replace with the actual name
+            List<Reservation> reservations = _reservationService.DisplayReservationByReserver(reserverName);
+
+            // Now you can do something with the reservations
+            foreach (var reservation in reservations)
+            {
+                Console.WriteLine($"Reservation Room: {reservation.Room.RoomName}, Reserver Name: {reservation.ReserverName}, Time: {reservation.Time}");
+            } 
 
 
-            rh.DisplayWeeklySchedule();
+            string roomId = "003"; 
+            List<Reservation> reservations2 = _reservationService.DisplayReservationByRoomId(roomId);
+
+            foreach (var reservation in reservations2)
+            {
+                Console.WriteLine($"Reservation Room: {reservation.Room}, Reserver Name: {reservation.ReserverName}, Time: {reservation.Time}");
+            }
+
+
+            
+
+            
+
+
+
         }
     }
+
 }

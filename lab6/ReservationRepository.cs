@@ -5,47 +5,75 @@ using System.Text.Json;
 using System.Linq;
 using System.Text.Json.Serialization;
 
+
 public class ReservationRepository : IReservationRepository
 {
+
     private List<Reservation> _reservations = new List<Reservation>();
 
-    private List<Room> rooms = new List<Room>();
+    private LogHandler _logHandler = new LogHandler();
+
+    [JsonPropertyName("Room")]
+    public List<Room> Rooms { get; set; }
 
     public ReservationRepository()
     {
-        _reservations = new List<Reservation>();
+        LoadReservations();
+        //LoadRooms();
     }
+
 
     public void AddReservation(Reservation reservation)
     {
         _reservations.Add(reservation);
+        _logHandler.handleLog("Room booked by " + reservation.ReserverName);
+        SaveReservations();
     }
 
     public void DeleteReservation(Reservation reservation)
     {
         _reservations.Remove(reservation);
+        _logHandler.handleLog("Room removed by" + reservation.ReserverName);
+        SaveReservations();
     }
 
-    public void loadRooms()
+    public List<Reservation> GetAllReservations()
     {
-        RoomHandler roomHandler = new RoomHandler();
-        List<Room> ?loadedRooms = roomHandler.GetRooms();
-        if (loadedRooms != null)
-        {
-            rooms = loadedRooms;
-        }
+        return _reservations;
     }
 
-
-    public void SaveRooms(List<Room> rooms)
+    public List<Room> GetRooms()
     {
-        var roomData = new RoomData { Rooms = rooms.ToArray() };
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true
-        };
-
-        string jsonString = JsonSerializer.Serialize(roomData, options);
-        File.WriteAllText(_filePath, jsonString);
+        return Rooms;
     }
+
+    public void SaveReservations()
+    {
+        string jsonString = JsonSerializer.Serialize(_reservations, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText("ReservationData.json", jsonString);
+    }
+
+    public void LoadReservations()
+    {
+        string jsonString = File.ReadAllText("ReservationData.json");
+        _reservations = JsonSerializer.Deserialize<List<Reservation>>(jsonString);
+    }
+
+    /* public void SaveRooms()
+    {
+        string jsonString = JsonSerializer.Serialize(Rooms, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText("LogData.json", jsonString);
+    }
+
+    public void LoadRooms()
+    {
+        string jsonString = File.ReadAllText("LogData.json");
+        Rooms = JsonSerializer.Deserialize<List<Room>>(jsonString);
+    } */
+
+    
+
+
+
+
 }

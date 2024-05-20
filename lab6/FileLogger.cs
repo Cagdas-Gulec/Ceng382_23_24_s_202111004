@@ -7,10 +7,11 @@ using System.Text.Json.Serialization;
 
 public class FileLogger : ILogger
 {
-    public void Log(LogRecord log)
+    public void Log(string message)
     {
-        string jsonString = JsonSerializer.Serialize(log);
-        File.AppendAllText("log.json", jsonString + Environment.NewLine);
+        LogRecord logRecord = new LogRecord(new DateTime(2024, 10, 21, 17, 25, 32), message);
+        string jsonString = JsonSerializer.Serialize(logRecord.ToString(), new JsonSerializerOptions { WriteIndented = true });
+        File.AppendAllText("LogData.json", jsonString + Environment.NewLine);
     }
 
 }

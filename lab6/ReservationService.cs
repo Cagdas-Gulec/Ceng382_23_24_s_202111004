@@ -7,22 +7,33 @@ using System.Text.Json.Serialization;
 
 public class ReservationService : IReservationService
 {
-    private ReservationHandler _reservationHandler;
-    private ReservationRepository? _reservationRepository;
+   ReservationRepository _reservationRepository;
 
-    public ReservationService(ReservationHandler reservationHandler)
-    {
-        _reservationHandler = reservationHandler;
+    public ReservationService() {
+        _reservationRepository = new ReservationRepository();
     }
-
-    public void reserveRoom(Reservation reservation)
+   
+    public void AddReservation(Reservation reservation)
     {
-        _reservationHandler.bookRoom(reservation);
+        _reservationRepository.AddReservation(reservation);
     }
 
     public void DeleteReservation(Reservation reservation)
     {
-        _reservationHandler.removeBooking(reservation.ToString());
+        _reservationRepository.DeleteReservation(reservation);
     }
+
+    public List<Reservation> DisplayReservationByReserver(string reserverName)
+    {
+        List<Reservation> reservations = _reservationRepository.GetAllReservations();
+        return reservations.Where(r => r.ReserverName == reserverName).ToList();
+    }
+
+    public List<Reservation> DisplayReservationByRoomId(string RoomId)
+    {
+        List<Reservation> reservations = _reservationRepository.GetAllReservations();
+        return reservations.Where(r => r.Room.RoomId == RoomId).ToList();
+    }
+    
 
 }

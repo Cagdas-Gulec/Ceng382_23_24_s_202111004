@@ -7,23 +7,27 @@ using System.Text.Json.Serialization;
 
 public class IReservationRepository
 {
-    public List<Reservation> getReservations()
+    
+    public void AddReservation(Reservation reservation)
     {
-        return new List<Reservation>();
+        
     }
 
-    public List<Room> getRooms()
+    public void DeleteReservation(Reservation reservation)
     {
-        return new List<Room>();
+        
     }
 
-    public void addReservation(Reservation reservation)
+    public List<Reservation> GetAllReservations()
     {
-        // Add reservation
+        return null;
     }
 
-    public void deleteReservation(Reservation reservation)
+    public List<Room> GetRooms()
     {
-        // Delete reservation
+        return null;
     }
+
+    
+
 }

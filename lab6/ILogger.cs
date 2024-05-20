@@ -9,6 +9,6 @@ public class ILogger
 {
     public void Log(string message)
     {
-        throw new NotImplementedException();
+        
     }
 }
