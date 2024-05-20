@@ -1,0 +1,38 @@
+[
+  {
+    "Time": "2024-10-21T17:25:32",
+    "ReserverName": "Cagdas Gulec",
+    "Room": {
+      "roomId": "001",
+      "roomName": "A-101",
+      "capacity": 30
+    }
+  },
+  {
+    "Time": "2019-08-12T23:47:55",
+    "ReserverName": "Arda Yildiz",
+    "Room": {
+      "roomId": "002",
+      "roomName": "A-102",
+      "capacity": 24
+    }
+  },
+  {
+    "Time": "2022-03-05T12:33:02",
+    "ReserverName": "Dogukan Poyraz",
+    "Room": {
+      "roomId": "003",
+      "roomName": "A-103",
+      "capacity": 26
+    }
+  },
+  {
+    "Time": "2018-05-07T15:13:59",
+    "ReserverName": "Samet Gungor",
+    "Room": {
+      "roomId": "009",
+      "roomName": "A-109",
+      "capacity": 38
+    }
+  }
+]

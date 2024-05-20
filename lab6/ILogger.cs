@@ -9,6 +9,8 @@ public class ILogger
 {
     public void Log(string message)
     {
-        throw new NotImplementedException();
+        LogRecord logRecord = new LogRecord(new DateTime(2024, 10, 21, 17, 25, 32), message);
+        string jsonString = JsonSerializer.Serialize(logRecord.ToString(), new JsonSerializerOptions { WriteIndented = true });
+        File.AppendAllText("LogData.json", jsonString + Environment.NewLine);
     }
 }

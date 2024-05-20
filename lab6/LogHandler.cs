@@ -7,31 +7,12 @@ using System.Text.Json.Serialization;
 
 public class LogHandler
 {
-    private ILogger _logger;
-
-    public void SetLogger(ILogger logger)
-    {
-        _logger = logger;
-    }
 
     public void handleLog(string message)
     {
-        _logger.Log(message);
+        LogRecord logRecord = new LogRecord(new DateTime(2024, 10, 21, 17, 25, 32), message);
+        string jsonString = JsonSerializer.Serialize(logRecord.ToString(), new JsonSerializerOptions { WriteIndented = true });
+        File.AppendAllText("LogData.json", jsonString + Environment.NewLine);
     }
-
-    
-    /* public static List<Reservation> DisplayLogsByName(string name) {
-        List<Reservation> reservations = new List<Reservation>();
-        ReservationRepository reservationRepository = new ReservationRepository();
-        reservations = ReservationService.DisplayReservationByReserver(name);
-        return reservations;
-    }
-
-    public static List<Reservation> DisplayLogsByRoomId(string Id) {
-        List<Reservation> reservations = new List<Reservation>();
-        ReservationRepository reservationRepository = new ReservationRepository();
-        reservations = ReservationService.DisplayReservationByRoomId(Id);
-        return reservations;
-    } */
     
 }

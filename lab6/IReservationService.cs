@@ -8,14 +8,14 @@ using System.Text.Json.Serialization;
 public class IReservationService
 {
 
-    public void createReservation(Reservation reservation)
+    public void AddReservation(Reservation reservation, string reserverName)
     {
-        // Create reservation
+       
     }
 
-    public void cancelReservation(string reservationId)
+    public void DeleteReservation(Reservation reservation)
     {
-        // Cancel reservation
+       
     }
 
 }

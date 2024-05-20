@@ -8,8 +8,19 @@ using System.Text.Json.Serialization;
 public record LogRecord
 {
 
-    public string? Message { get; set; }
+    DateTime TimeStamp { get; init; }
 
-    public DateTime Timestamp { get; set; }
+    string Message { get; init; }
+    
+    public LogRecord(DateTime timeStamp, string message)
+    {
+        TimeStamp = timeStamp;
+        Message = message;
+    }
+
+    public override string ToString()
+    {
+        return $"Time: {TimeStamp} \n Message: {Message} \n";
+    }
 
 }
