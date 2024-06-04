@@ -1,0 +1,33 @@
+@page
+@model Reservation.Pages.MyReservationsModel
+@{
+    ViewData["Title"] = "My Reservations";
+}
+
+<h2>My Reservations</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Room</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservation in Model.Reservations)
+        {
+            <tr>
+                <td>@reservation.Room.Name</td>
+                <td>@reservation.Startdate.ToShortDateString()</td>
+                <td>@reservation.Enddate.ToShortDateString()</td>
+                <td>
+                    <form method="post" asp-page-handler="Cancel" asp-route-id="@reservation.Id">
+                        <button type="submit" class="btn btn-danger">Cancel</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

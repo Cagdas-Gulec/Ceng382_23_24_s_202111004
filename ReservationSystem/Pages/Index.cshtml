@@ -1,0 +1,68 @@
+﻿@page
+@model Reservation.Pages.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Available Rooms</h1>
+
+<form method="get">
+    <div>
+        <label>Room Name: </label>
+        <input type="text" asp-for="FilterRoomName" />
+    </div>
+    <div>
+        <label>Start Date: </label>
+        <input type="date" asp-for="FilterStartDate" />
+    </div>
+    <div>
+        <label>End Date: </label>
+        <input type="date" asp-for="FilterEndDate" />
+    </div>
+    <div>
+        <label>Capacity: </label>
+        <input type="number" asp-for="FilterCapacity" />
+    </div>
+    <button type="submit">Filter</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Room Name</th>
+            <th>Capacity</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var room in Model.Rooms)
+        {
+            <tr>
+                <td>@room.Name</td>
+                <td>@room.Capacity</td>
+                <td>
+                    <form method="post" asp-page-handler="DeleteRoom">
+                        <input type="hidden" name="roomId" value="@room.Id" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h1>Create Room</h1>
+
+<form method="post" asp-page-handler="CreateRoom">
+    <div class="form-group">
+        <label asp-for="Room.Name"></label>
+        <input class="form-control" asp-for="Room.Name" />
+        <span asp-validation-for="Room.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Room.Capacity"></label>
+        <input class="form-control" asp-for="Room.Capacity" />
+        <span asp-validation-for="Room.Capacity" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
